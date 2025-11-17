@@ -1,3 +1,5 @@
+const API_BASE = "https://tej-ai-portfolio.onrender.com";
+
 import { useState } from "react";
 import axios from "axios";
 
@@ -10,26 +12,27 @@ export default function AIChat() {
   const [error, setError] = useState("");
 
   const sendMessage = async () => {
-    if (!input.trim()) return;
-    const newMessages = [...messages, { role: "user", content: input }];
-    setMessages(newMessages);
-    setInput("");
-    setLoading(true);
-    setError("");
+  if (!input.trim()) return;
+  const newMessages = [...messages, { role: "user", content: input }];
+  setMessages(newMessages);
+  setInput("");
+  setLoading(true);
+  setError("");
 
-    try {
-      const response = await axios.post("http://127.0.0.1:5000/api/chat", {
-        messages: newMessages,
-      });
-      const reply = response.data.reply || "I couldn't generate a response.";
-      setMessages([...newMessages, { role: "assistant", content: reply }]);
-    } catch (err) {
-      console.error(err);
-      setError("Backend is not responding. Check if Flask is running.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  try {
+    const response = await axios.post(`${API_BASE}/api/chat`, {
+      messages: newMessages,
+    });
+    const reply = response.data.reply || "I couldn't generate a response.";
+    setMessages([...newMessages, { role: "assistant", content: reply }]);
+  } catch (err) {
+    console.error(err);
+    setError("Backend is not responding. Check if the server is up.");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <div className="card">

@@ -1,3 +1,5 @@
+const API_BASE = "https://tej-ai-portfolio.onrender.com";
+
 import { useState } from "react";
 import axios from "axios";
 
@@ -9,22 +11,23 @@ export default function ResumeAnalyzer() {
   const [error, setError] = useState("");
 
   const handleAnalyze = async () => {
-    setLoading(true);
-    setError("");
-    setResult(null);
-    try {
-      const response = await axios.post("http://127.0.0.1:5000/api/analyze-resume", {
-        resume: resumeText,
-        job: jobText,
-      });
-      setResult(response.data);
-    } catch (err) {
-      console.error(err);
-      setError("Something went wrong talking to the backend. Is Flask running?");
-    } finally {
-      setLoading(false);
-    }
-  };
+  setLoading(true);
+  setError("");
+  setResult(null);
+  try {
+    const response = await axios.post(`${API_BASE}/api/analyze-resume`, {
+      resume: resumeText,
+      job: jobText,
+    });
+    setResult(response.data);
+  } catch (err) {
+    console.error(err);
+    setError("Something went wrong talking to the backend.");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <div className="card">
