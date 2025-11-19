@@ -1,4 +1,4 @@
-import Navbar from "./components/Navbar";
+import Navbar from "./components/navbar";
 import Hero from "./components/Hero";
 import Projects from "./components/Projects";
 import ResumeAnalyzer from "./components/ResumeAnalyzer";
